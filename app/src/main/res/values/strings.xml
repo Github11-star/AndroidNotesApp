@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android Notes App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login_fragment">Login fragment</string>
+    <string name="main_fragment">main fragment</string>
+    <string name="note_fragment">Note fragment</string>
+    <string name="register_fragment">Register fragment</string>
 </resources>
