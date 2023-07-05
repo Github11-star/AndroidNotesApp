@@ -18,15 +18,18 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentRegisterBinding.inflate(inflater,container,false)
-        /*binding.txtRedirect.setOnClickListener {
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-        }*/
 
+        _binding = FragmentRegisterBinding.inflate(inflater,container,false)
+
+        binding.btnSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
+        }
+
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
         return binding.root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
