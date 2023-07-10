@@ -1,6 +1,7 @@
 package com.firozpocyt.androidnotesapp.di
 
 import com.firozpocyt.androidnotesapp.api.UserAPI
+import com.firozpocyt.androidnotesapp.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ class NetworkModule {
     fun providesRetrofit(): Retrofit{
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("")
+            .baseUrl(BASE_URL)
             .build()
     }
 
