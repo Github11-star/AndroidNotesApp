@@ -12,7 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.firozpocyt.androidnotesapp.databinding.FragmentLoginBinding
 import com.firozpocyt.androidnotesapp.models.UserRequest
 import com.firozpocyt.androidnotesapp.utils.NetworkResult
+import com.firozpocyt.androidnotesapp.utils.TokenManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -20,6 +22,9 @@ class LoginFragment : Fragment() {
     private var _binding : FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val authViewModel by viewModels<AuthViewModel>()
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +70,7 @@ class LoginFragment : Fragment() {
             binding.progressBar.isVisible = false
             when(it){
                 is NetworkResult.Success -> {
-                    // token
+                    tokenManager.saveToken(it.data!!.token)
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 }
                 is NetworkResult.Error -> {
