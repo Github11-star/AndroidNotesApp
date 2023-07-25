@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.firozpocyt.androidnotesapp.R
 import com.firozpocyt.androidnotesapp.databinding.FragmentNoteBinding
 import com.firozpocyt.androidnotesapp.models.NoteRequest
 import com.firozpocyt.androidnotesapp.models.NoteResponse
@@ -19,16 +20,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NoteFragment : Fragment() {
 
-    private var _binding : FragmentNoteBinding? = null
+    private var _binding: FragmentNoteBinding? = null
     private val binding get() = _binding!!
-    private var note : NoteResponse? = null
-    private val noteViewModel by viewModels<NoteViewModel> ()
+    private val noteViewModel by viewModels<NoteViewModel>()
+    private var note: NoteResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNoteBinding.inflate(inflater,container,false)
+        _binding = FragmentNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -57,7 +58,6 @@ class NoteFragment : Fragment() {
 
     private fun bindHandlers() {
         binding.btnDelete.setOnClickListener {
-            Toast.makeText(requireContext(), "note- ${note?.title}", Toast.LENGTH_SHORT).show()
             note?.let { noteViewModel.deleteNote(it!!._id) }
         }
         binding.apply {
@@ -76,20 +76,21 @@ class NoteFragment : Fragment() {
 
     private fun setInitialData() {
         val jsonNote = arguments?.getString("note")
-        if (jsonNote !=null){
-            note = Gson().fromJson(jsonNote, NoteResponse::class.java)
+        if (jsonNote != null) {
+            note = Gson().fromJson<NoteResponse>(jsonNote, NoteResponse::class.java)
             note?.let {
                 binding.txtTitle.setText(it.title)
                 binding.txtDescription.setText(it.description)
             }
         }
-        else {
-            binding.addEditText.text = "Add Note"
+        else{
+            binding.addEditText.text = resources.getString(R.string.add_note)
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

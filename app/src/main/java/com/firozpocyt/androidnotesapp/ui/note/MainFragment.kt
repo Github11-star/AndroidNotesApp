@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    private var _binding : FragmentMainBinding? = null
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val noteViewModel by viewModels<NoteViewModel>()
 
@@ -31,7 +31,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         adapter = NoteAdapter(::onNoteClicked)
         return binding.root
@@ -39,8 +38,9 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        noteViewModel.getNote()
-        binding.noteList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        noteViewModel.getAllNotes()
+        binding.noteList.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.noteList.adapter = adapter
         binding.addNote.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_noteFragment)
@@ -49,14 +49,15 @@ class MainFragment : Fragment() {
     }
 
     private fun bindObservers() {
-        noteViewModel.noteLiveData.observe(viewLifecycleOwner, Observer {
-                binding.progressBar.isVisible = false
-            when(it){
+        noteViewModel.notesLiveData.observe(viewLifecycleOwner, Observer {
+            binding.progressBar.isVisible = false
+            when (it) {
                 is NetworkResult.Success -> {
                     adapter.submitList(it.data)
                 }
                 is NetworkResult.Error -> {
-                    Toast.makeText(requireContext(),it.message.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
                 is NetworkResult.Loading -> {
                     binding.progressBar.isVisible = true
@@ -66,14 +67,13 @@ class MainFragment : Fragment() {
     }
 
     private fun onNoteClicked(noteResponse: NoteResponse){
-        //Toast.makeText(requireContext(), "note- ${noteResponse.title}", Toast.LENGTH_SHORT).show()
         val bundle = Bundle()
         bundle.putString("note", Gson().toJson(noteResponse))
-        findNavController().navigate(R.id.action_mainFragment_to_noteFragment)
+        findNavController().navigate(R.id.action_mainFragment_to_noteFragment, bundle)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

@@ -9,32 +9,36 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NoteViewModel @Inject constructor(private val noteRepository: NoteRepository): ViewModel() {
+class NoteViewModel @Inject constructor(private val noteRepository: NoteRepository) : ViewModel() {
 
-    val noteLiveData get() = noteRepository.noteLiveData
+    val notesLiveData get() = noteRepository.noteLiveData
     val statusLiveData get() = noteRepository.statusLiveData
 
-    fun getNote(){
-        viewModelScope.launch {
-        noteRepository.getNotes()
-        }
-    }
-
-    fun createNote(noteRequest: NoteRequest){
+    fun createNote(noteRequest: NoteRequest) {
         viewModelScope.launch {
             noteRepository.createNote(noteRequest)
         }
     }
 
-    fun updateNote(notedId : String, noteRequest: NoteRequest){
+    fun getAllNotes() {
         viewModelScope.launch {
-            noteRepository.updateNote(notedId,noteRequest)
+            noteRepository.getNotes()
         }
     }
 
-    fun deleteNote(notedId: String){
+    fun updateNote(id: String, noteRequest: NoteRequest){
         viewModelScope.launch {
-            noteRepository.deleteNote(notedId)
+            noteRepository.updateNote(id, noteRequest)
         }
     }
+
+    fun deleteNote(noteId: String) {
+        viewModelScope.launch {
+            noteRepository.deleteNote(noteId)
+        }
+    }
+
+
+
+
 }
