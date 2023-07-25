@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firozpocyt.androidnotesapp.databinding.NoteItemBinding
 import com.firozpocyt.androidnotesapp.models.NoteResponse
 
-class NoteAdapter() :
+class NoteAdapter(private val onNoteClicked: (NoteResponse) -> Unit) :
     ListAdapter<NoteResponse, NoteAdapter.NoteViewHolder>(ComparatorDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -30,7 +30,7 @@ class NoteAdapter() :
             binding.title.text = note.title
             binding.desc.text = note.description
             binding.root.setOnClickListener {
-                //onNoteClicked(note)
+                onNoteClicked(note)
             }
         }
 
