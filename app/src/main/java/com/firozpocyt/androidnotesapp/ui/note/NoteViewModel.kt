@@ -1,4 +1,4 @@
-package com.firozpocyt.androidnotesapp
+package com.firozpocyt.androidnotesapp.ui.note
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

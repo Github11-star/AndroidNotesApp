@@ -1,4 +1,4 @@
-package com.firozpocyt.androidnotesapp
+package com.firozpocyt.androidnotesapp.ui.note
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

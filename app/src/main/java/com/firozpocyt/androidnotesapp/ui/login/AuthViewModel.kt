@@ -1,4 +1,4 @@
-package com.firozpocyt.androidnotesapp
+package com.firozpocyt.androidnotesapp.ui.login
 
 import android.text.TextUtils
 import android.util.Patterns

@@ -1,4 +1,4 @@
-package com.firozpocyt.androidnotesapp
+package com.firozpocyt.androidnotesapp.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.firozpocyt.androidnotesapp.R
 import com.firozpocyt.androidnotesapp.databinding.FragmentLoginBinding
 import com.firozpocyt.androidnotesapp.models.UserRequest
 import com.firozpocyt.androidnotesapp.utils.NetworkResult
